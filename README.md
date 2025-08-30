@@ -44,7 +44,7 @@
 
 4. **Set up the AI chatbot model**
 
-   - Download a GGUF model (we recommend **OpenHermes 2.5 Mistral 7B**)
+   - Download a GGUF model (I recommend **OpenHermes 2.5 Mistral 7B**)
    - Place the `.gguf` file in `chatbot/models/`
    - The system will automatically detect and use the model
 
@@ -111,7 +111,7 @@ Ensure both servers are running before using the extension.
 
 ```
 clarity/
-├── extension/              # Browser extension files
+├── extension/             # Browser extension files
 │   ├── manifest.json      # Extension manifest
 │   ├── content.js         # Content script
 │   ├── background.js      # Background script
@@ -248,7 +248,7 @@ Clarity uses official Australian data sources for fact-checking:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please:
+I welcome contributions! Please:
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/new-feature`
