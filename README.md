@@ -1,15 +1,58 @@
-# 🌟 Clarity - Digital Safety Assistant
+# 🌟 Clarity – Building Digital Confidence Online
 
-**Clarity** is an AI-powered browser extension that helps users navigate the digital world safely by detecting misinformation, analyzing cyberthreats, and providing intelligent insights through an integrated chatbot assistant.
+The internet powers communication, services, and community — but it’s also filled with risks: phishing scams, fake ads, ransomware, and misinformation that erodes trust. These challenges are hardest on **vulnerable groups** like children, the elderly, minority communities, and people who are digitally inexperienced. Without the right tools, they are left more exposed to online manipulation and fraud.
 
-## ✨ Features
+**Clarity** is my response to the GovHack 2025 challenge: a browser extension built to **restore trust, enhance safety, and empower everyday users**. By combining real-time cyberthreat detection, misinformation analysis with government datasets, and an approachable AI assistant, I aim to make online participation more **secure, inclusive, and confident** for everyone.
 
-- **🛡️ Real-time Threat Detection** - Identify malicious links, phishing attempts, and suspicious content
-- **📊 Misinformation Analysis** - Fact-check claims using official Australian Bureau of Statistics (ABS) data
-- **🤖 AI Chatbot Assistant** - Interactive AI companion powered by local GGUF models with CUDA acceleration
-- **📈 Rich Context Integration** - Compile comprehensive insights from multiple analysis sources
-- **🌐 Browser Extension** - Seamless integration with web browsing experience
-- **🔒 Privacy-First** - All processing happens locally, no data sent to external APIs
+---
+
+## ✨ What Clarity Does
+
+- **🛡️ Real-time Threat Detection** – Flags phishing attempts, malicious links, and scammy popups before they cause harm  
+- **📊 Misinformation Analysis** – Cross-checks online claims against trusted government data (e.g., ABS housing statistics) to spot misleading narratives  
+- **🤖 AI Chatbot Assistant ("Clarity")** – Provides simple, accessible explanations and guidance, powered locally with GGUF models and CUDA acceleration  
+- **📈 Rich Context Integration** – Brings together insights from cyber and misinformation analysis in one clear view  
+- **🌐 Browser Extension** – Runs seamlessly alongside everyday browsing, always ready when users need it  
+- **🔒 Privacy-First** – No data leaves your machine; all processing is local for maximum trust and security  
+
+---
+
+## 💡 Why It Matters
+
+Digital safety isn’t just a technical issue — it’s a human one. When people can’t trust what they see online, they withdraw from digital spaces, miss out on government services, and become more vulnerable to exploitation. My goal with Clarity is to **give users confidence back**: children learn what to avoid, seniors feel safer navigating the web, and communities can engage online without fear of scams or misinformation. By centering on **inclusivity, trust, and practical protection**, Clarity directly addresses the challenge of enabling secure and meaningful online participation.
+
+---
+
+## ⚙️ How It Works
+
+### 1. Scan the Page
+As you browse, Clarity scans the page in real-time, looking at text, links, ads, and popups.
+
+### 2. Threat Detection
+Using a library of patterns (phishing phrases, suspicious domains, scammy ad language), Clarity flags potential cyberthreats like fake login requests, malicious downloads, or misleading advertisements.
+
+### 3. Misinformation Check (Government Data)
+Claims in the page are compared against trusted government datasets. For example, if an article claims _“housing prices are falling”_, but official ABS data shows the opposite trend, Clarity highlights the contradiction.
+
+### 4. AI-Powered Insights
+All detected risks and mismatches are passed into the Clarity Assistant chatbot. Users can ask questions about the page in **plain English**, and the bot explains:
+- Why something might be misleading or dangerous  
+- How it connects to government data  
+- Safer alternatives or official sources to consult  
+
+### 5. User-Friendly Explanations
+Instead of jargon-heavy warnings, Clarity translates findings into **simple, approachable language**, helping vulnerable users — children, seniors, or anyone less digitally experienced — to understand risks without fear or confusion.
+
+---
+
+### Example Flow
+1. You open a news article.  
+2. Clarity flags:  
+   - ⚠ “Your account has been suspended” → *common phishing phrase*  
+   - ⚠ “Housing prices are crashing” → *contradicts official ABS housing dataset*  
+3. The chatbot explains:  
+   > “This phrase is often used in phishing scams. Don’t click links like these. Also, according to the ABS, housing prices have actually increased in the last quarter. Here’s the official chart.”  
+
 
 ## 🚀 Quick Start
 
