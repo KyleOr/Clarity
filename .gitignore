@@ -1,0 +1,52 @@
+# Generated Analysis Results
+context_input/
+fact_check_results/
+input_pages/
+threat_detect_results/
+processed/
+trimmed_data/
+
+# Chatbot Model Files and Cache
+chatbot/llama.cpp
+chatbot/llama.cpp.exe
+chatbot/models/
+chatbot/input/
+chatbot/output/
+chatbot/__pycache__/
+*.gguf
+*.bin
+
+# Python Cache and Virtual Environment
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+env/
+.env
+
+# IDE and System Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Temporary Files
+*.tmp
+*.log
+*.bak
+
+# Node modules (if any)
+node_modules/
+
+# Model Downloads
+*.7z
+*.zip
+*.tar.gz
+*.tar.bz2
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/

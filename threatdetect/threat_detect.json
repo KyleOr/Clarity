@@ -1,0 +1,444 @@
+{
+  "version": "1.0",
+  "updated_utc": "2025-08-30T00:00:00Z",
+  "scoring": {
+    "risk_thresholds": { "low": 20, "medium": 40, "high": 70, "critical": 90 },
+    "default_signal_weight": 5
+  },
+  "global_signals": {
+    "common_suspicious_tlds": [
+      "zip","mov","lol","xyz","top","cn","ru","click","work","rest","country","gq","ml","tk","cf","quest","skin","cam","mom","support","live","fit","casino","link","bar","party"
+    ],
+    "url_shorteners": [
+      "bit.ly","tinyurl.com","t.co","goo.gl","ow.ly","is.gd","buff.ly","cutt.ly","rebrand.ly","bl.ink","po.st","v.gd","shorte.st"
+    ],
+    "file_extensions_high_risk": [
+      ".exe",".scr",".js",".vbs",".jar",".bat",".cmd",".ps1",".psm1",".apk",".pkg",".msi",".dll",".hta",".iso",".img",".vhd",".lnk",".chm",".ace",".7z",".rar",".zip",".gz"
+    ],
+    "cryptocurrency_terms": [
+      "bitcoin","btc","ethereum","eth","tether","usdt","monero","xmr","litecoin","ltc","bnb","binance","seed phrase","private key","wallet address","metamask","phantom wallet","ledger","trezor"
+    ],
+    "urgency_phrases": [
+      "urgent action required","verify immediately","account locked","limited time","last warning","final notice","respond within 24 hours","failure to act","avoid suspension","avoid penalty","security alert","unusual activity detected","confirm identity now","pending deactivation","your account will be closed"
+    ],
+    "brand_impersonation": [
+      "microsoft","office 365","outlook","google","gmail","apple","icloud","amazon","paypal","facebook","instagram","x","netflix","spotify","adobe","dropbox","docusign","zoom","slack","github","okta",
+      "commonwealth bank","cba","westpac","anz","nab","commbank","telstra","optus","australia post","auspost","mygov","ato","services australia","medicare","nsw government","vic gov","queensland government"
+    ],
+    "homoglyph_hints": {
+      "patterns": [
+        "(?i)xn--",
+        "(?i)[o0][il1]p",
+        "(?i)paypa[lI1]",
+        "(?i)m(ic|lc)rosoft",
+        "(?i)g00gle",
+        "(?i)faceb00k",
+        "(?i)amaz0n",
+        "(?i)app1e"
+      ],
+      "weight": 8
+    },
+    "obfuscation_hints": {
+      "patterns": [
+        "(?i)v\\s*e\\s*r\\s*i\\s*f\\s*y",
+        "(?i)l\\s*o\\s*g\\s*i\\s*n",
+        "\\u200b",
+        "(?i)\\b(dot)\\b",
+        "(?i)\\b(at)\\b"
+      ],
+      "weight": 6
+    }
+  },
+  "threat_categories": [
+    {
+      "id": "phishing",
+      "name": "Phishing / Credential Harvesting",
+      "severity_default": "high",
+      "weights": { "keyword": 6, "regex": 8, "url": 10, "form": 9, "header": 7 },
+      "signals": {
+        "keywords": [
+          "verify your account","update your password","confirm your identity","suspicious login attempt","unusual activity","account suspended","account locked",
+          "security verification","click the secure link","login to avoid deactivation","password expiry","two-factor reset","confirm billing information",
+          "document pending signature","docusign document","shared file requires login","your invoice is ready","new voicemail message"
+        ],
+        "regex_patterns": [
+          "(?i)\\bverify (?:your|the) (?:account|identity)\\b",
+          "(?i)\\blog(?:in|on) (?:now|immediately|to (?:keep|avoid|prevent))\\b",
+          "(?i)\\b(account|service) (?:suspended|locked|disabled)\\b",
+          "(?i)\\b(unusual|suspicious) (?:sign[- ]?in|activity)\\b",
+          "(?i)\\b2fa|two[- ]factor (?:reset|disabled)\\b",
+          "(?i)\\bupdate (?:payment|billing) details\\b"
+        ],
+        "url_indicators": {
+          "regex": [
+            "(?i)https?:\\/\\/[^\\s]*\\.(?:security|update|verify|login|auth|customer|support)[^\\s]*",
+            "(?i)https?:\\/\\/[^\\s]*-(?:secure|verify|auth|login)[^\\s]*",
+            "(?i)https?:\\/\\/(?:[^\\s]*\\.)?(?:microsoftsecure|paypa1|g00gle|faceb00k|amaz0n)[^\\s]*",
+            "(?i)https?:\\/\\/[^\\s]*\\.(?:zip|mov|xyz|top|click|link|help|support)(?:\\/|$)",
+            "(?i)https?:\\/\\/(?:[^\\s]*\\.)?(?:bit\\.ly|tinyurl\\.com|t\\.co|is\\.gd|cutt\\.ly|rebrand\\.ly)\\/[A-Za-z0-9]+"
+          ],
+          "suspicious_tlds_override": ["zip","mov","xyz","top","click","help","support","link","lol"],
+          "weight": 10
+        },
+        "form_indicators": {
+          "field_names_like": [
+            "password","passcode","otp","one_time_code","security_code","2fa","cvv","ssn","tax_file_number","tfn","driver_licence","medicare","credit_card","card_number","expiry","routing","account_number",
+            "mygov","ato","netbank","token","seed","seed_phrase","recovery_phrase"
+          ],
+          "weight": 9
+        },
+        "header_indicators": {
+          "email_like_headers": [
+            "reply-to != from domain","spf=fail","dkim=fail","dmarc=fail","return-path mismatch"
+          ],
+          "weight": 7
+        }
+      }
+    },
+    {
+      "id": "smishing_vishing",
+      "name": "SMS/Voice Phishing (Smishing / Vishing)",
+      "severity_default": "high",
+      "weights": { "keyword": 6, "regex": 7, "url": 8 },
+      "signals": {
+        "keywords": [
+          "your parcel is awaiting delivery","pay customs fee","your package is held","missed delivery attempt","tap link to track",
+          "bank alert","unauthorized payment","call this number now","call to avoid suspension","press 1 to speak to an agent"
+        ],
+        "regex_patterns": [
+          "(?i)auspost|australia\\s*post|parcel|tracking\\s*(?:id|code|number)",
+          "(?i)\\b(press|dial)\\s*1\\b",
+          "(?i)\\bcall\\s*(?:now|immediately)\\b"
+        ],
+        "url_indicators": {
+          "regex": [
+            "(?i)https?:\\/\\/(?:auspost|australiapost)[^\\s]*\\.(?:top|xyz|link|support|help)",
+            "(?i)https?:\\/\\/(?:bit\\.ly|tinyurl\\.com|is\\.gd|cutt\\.ly)\\/[A-Za-z0-9]+"
+          ],
+          "weight": 8
+        }
+      }
+    },
+    {
+      "id": "tech_support_scam",
+      "name": "Tech Support / Scareware",
+      "severity_default": "medium",
+      "weights": { "keyword": 6, "regex": 8, "url": 6, "attachment": 5 },
+      "signals": {
+        "keywords": [
+          "your computer is infected","windows defender alert","microsoft security essential","do not shut down","call microsoft support",
+          "suspicious activity on your computer","malicious virus detected","system blocked for security reasons"
+        ],
+        "regex_patterns": [
+          "(?i)\\b(do not) (?:turn off|shut down)\\b",
+          "(?i)\\bcontact (?:microsoft|apple) support\\b",
+          "(?i)\\bdefender (?:firewall|alert)\\b"
+        ],
+        "url_indicators": {
+          "regex": [
+            "(?i)https?:\\/\\/(?:microsoft|apple)[^\\s]*\\.(?:support|help|verify|security)[^\\s]*",
+            "(?i)https?:\\/\\/[^\\s]*-defender[^\\s]*"
+          ],
+          "weight": 6
+        },
+        "attachment_indicators": {
+          "file_extensions": [".exe",".scr",".msi",".bat",".cmd",".ps1",".js",".vbs",".apk",".pkg",".iso",".img",".lnk"],
+          "weight": 7
+        }
+      }
+    },
+    {
+      "id": "ransomware",
+      "name": "Ransomware / Encryption Threats",
+      "severity_default": "critical",
+      "weights": { "keyword": 9, "regex": 9, "attachment": 9, "payment": 9 },
+      "signals": {
+        "keywords": [
+          "your files have been encrypted","decrypt key","pay ransom","restore your files","time-limited decryption","bitcoin payment required"
+        ],
+        "regex_patterns": [
+          "(?i)\\b(encrypt(?:ed|ion))\\b",
+          "(?i)\\b(decrypt(?:ion)? key)\\b",
+          "(?i)\\b(pay(?:ment)? in (?:bitcoin|btc|crypto|monero|xmr))\\b"
+        ],
+        "attachment_indicators": {
+          "file_extensions": [".7z",".rar",".zip",".gz",".ace",".js",".vbs",".hta",".exe",".scr",".dll",".iso",".img"],
+          "weight": 9
+        },
+        "payment_indicators": {
+          "crypto_address_regex": [
+            "(?i)\\b(bc1|[13])[a-km-zA-HJ-NP-Z1-9]{25,39}\\b",
+            "(?i)\\b0x[a-fA-F0-9]{40}\\b",
+            "(?i)\\b4[0-9AB][1-9A-HJ-NP-Za-km-z]{93}\\b"
+          ],
+          "weight": 9
+        }
+      }
+    },
+    {
+      "id": "identity_theft",
+      "name": "Identity Theft / Data Harvesting",
+      "severity_default": "high",
+      "weights": { "keyword": 7, "form": 9, "regex": 7 },
+      "signals": {
+        "keywords": [
+          "provide your ssn","provide your tfn","scan your id","upload driver licence","confirm passport number","submit medicare details",
+          "identity verification form","kyc verification","upload front and back of id"
+        ],
+        "regex_patterns": [
+          "(?i)\\b(tax file number|tfn)\\b",
+          "(?i)\\b(driver'?s? licence|license)\\b",
+          "(?i)\\bmedicare (?:number|id)\\b",
+          "(?i)\\bpassport (?:no\\.|number)\\b"
+        ],
+        "form_indicators": {
+          "field_names_like": [
+            "ssn","tfn","passport","passport_number","driver_licence","drivers_license","medicare","national_id","dob","date_of_birth","mother_maiden_name","security_question","secret_question",
+            "seed","seed_phrase","recovery_phrase","private_key"
+          ],
+          "weight": 9
+        }
+      }
+    },
+    {
+      "id": "payment_fraud",
+      "name": "Payment Fraud / Gift Card / Refund Scam",
+      "severity_default": "high",
+      "weights": { "keyword": 7, "regex": 7, "payment": 8 },
+      "signals": {
+        "keywords": [
+          "pay with gift cards","itunes cards","google play cards","steam gift cards","refund team","overpayment refund","processing fee",
+          "wire transfer immediately","moneygram","western union","bank transfer now","send receipt photo"
+        ],
+        "regex_patterns": [
+          "(?i)\\bgift\\s*card\\b",
+          "(?i)\\bover[- ]?payment\\b",
+          "(?i)\\bwire transfer\\b",
+          "(?i)\\bbank (?:routing|account) number\\b"
+        ],
+        "payment_indicators": {
+          "methods": ["gift_card","crypto","wire_transfer","moneygram","western_union","cashapp"],
+          "weight": 8
+        }
+      }
+    },
+    {
+      "id": "business_email_compromise",
+      "name": "Business Email Compromise (BEC) / Invoice Fraud",
+      "severity_default": "high",
+      "weights": { "keyword": 6, "regex": 7, "header": 8 },
+      "signals": {
+        "keywords": [
+          "are you at your desk","can you process a payment urgently","keep this confidential","change of bank details",
+          "new supplier bank account","updated remittance information","approve wire today"
+        ],
+        "regex_patterns": [
+          "(?i)\\bchange (?:of )?bank details\\b",
+          "(?i)\\burgent (?:payment|wire)\\b",
+          "(?i)\\bconfidential\\b"
+        ],
+        "header_indicators": {
+          "email_like_headers": ["display-name spoofing","from domain mismatch","reply-to external free webmail","spf=softfail"],
+          "weight": 8
+        }
+      }
+    },
+    {
+      "id": "investment_crypto_scam",
+      "name": "Investment / Crypto Scam",
+      "severity_default": "high",
+      "weights": { "keyword": 7, "regex": 7, "payment": 8 },
+      "signals": {
+        "keywords": [
+          "guaranteed returns","double your money","no risk investment","trade with our bot","limited slots available",
+          "celebrity endorsed","government backed crypto","ATO approved scheme"
+        ],
+        "regex_patterns": [
+          "(?i)\\bguaranteed (?:profit|returns)\\b",
+          "(?i)\\bno[- ]risk\\b",
+          "(?i)\\bget rich (?:quick|today)\\b",
+          "(?i)\\bATO (?:approved|endorsed)\\b"
+        ],
+        "payment_indicators": {
+          "crypto_address_regex": [
+            "(?i)\\b(bc1|[13])[a-km-zA-HJ-NP-Z1-9]{25,39}\\b",
+            "(?i)\\b0x[a-fA-F0-9]{40}\\b"
+          ],
+          "weight": 8
+        }
+      }
+    },
+    {
+      "id": "romance_scam",
+      "name": "Romance / Social Engineering",
+      "severity_default": "medium",
+      "weights": { "keyword": 6, "regex": 6, "payment": 7 },
+      "signals": {
+        "keywords": [
+          "i need help with a medical bill","package stuck at customs","my account is frozen","send money so i can visit",
+          "i lost my wallet","i need gift cards","don’t tell anyone"
+        ],
+        "regex_patterns": [
+          "(?i)\\bwidow(?:er)?\\b",
+          "(?i)\\bdeployed overseas\\b",
+          "(?i)\\burgent (?:help|loan)\\b"
+        ]
+      }
+    },
+    {
+      "id": "job_charity_scam",
+      "name": "Job Offer / Charity / Lottery Scam",
+      "severity_default": "medium",
+      "weights": { "keyword": 6, "regex": 7 },
+      "signals": {
+        "keywords": [
+          "work from home earn","no interview required","send equipment fee","processing fee for background check",
+          "congratulations you have won","unclaimed funds","donation for disaster relief"
+        ],
+        "regex_patterns": [
+          "(?i)\\bbackground check fee\\b",
+          "(?i)\\btraining kit fee\\b",
+          "(?i)\\blottery (?:winner|winnings)\\b",
+          "(?i)\\bgrant (?:approval|released)\\b"
+        ]
+      }
+    },
+    {
+      "id": "malicious_download",
+      "name": "Malicious Download / Fake Update",
+      "severity_default": "high",
+      "weights": { "keyword": 6, "regex": 7, "attachment": 9, "url": 7 },
+      "signals": {
+        "keywords": [
+          "update your browser","required codec download","flash player required","security update available",
+          "download to continue","unlock content"
+        ],
+        "regex_patterns": [
+          "(?i)\\bfake (?:update|installer)\\b",
+          "(?i)\\bdriver (?:update|required)\\b"
+        ],
+        "url_indicators": {
+          "regex": [
+            "(?i)https?:\\/\\/[^\\s]*\\/(?:update|installer|setup|download)[^\\s]*",
+            "(?i)https?:\\/\\/[^\\s]*-update[^\\s]*"
+          ],
+          "weight": 7
+        },
+        "attachment_indicators": {
+          "file_extensions": [".exe",".msi",".pkg",".dmg",".apk",".js",".vbs",".scr",".iso",".img",".lnk",".hta"],
+          "weight": 9
+        }
+      }
+    },
+    {
+      "id": "oauth_consent_phish",
+      "name": "OAuth Consent Phishing / Malicious App",
+      "severity_default": "high",
+      "weights": { "keyword": 6, "regex": 8, "url": 7 },
+      "signals": {
+        "keywords": [
+          "consent to the requested permissions","grant access to your mailbox","application requests offline access",
+          "sign in with microsoft to continue","google requests access to contacts"
+        ],
+        "regex_patterns": [
+          "(?i)\\bconsent (?:to|for) (?:offline|all) access\\b",
+          "(?i)\\bread|send|delete (?:your )?mail\\b",
+          "(?i)\\baccess to files on drive\\b"
+        ],
+        "url_indicators": {
+          "regex": [
+            "(?i)https?:\\/\\/(?:login|consent|account)[^\\s]*\\.(?:microsoft|google)\\.[^\\s]*\\/(?:oauth2|consent)[^\\s]*",
+            "(?i)https?:\\/\\/[^\\s]*\\.onmicrosoft\\.com\\/(?:oauth2|authorize)[^\\s]*"
+          ],
+          "weight": 7
+        }
+      }
+    },
+    {
+      "id": "qr_phishing",
+      "name": "QR Code Phishing (Quishing)",
+      "severity_default": "medium",
+      "weights": { "keyword": 5, "regex": 7, "url": 8 },
+      "signals": {
+        "keywords": [
+          "scan to verify","scan to claim","scan to login","scan to track parcel","scan to pay fee"
+        ],
+        "regex_patterns": [
+          "(?i)\\bscan (?:the|this) QR\\b",
+          "(?i)\\bQR code (?:required|needed)\\b"
+        ],
+        "url_indicators": {
+          "regex": [
+            "(?i)https?:\\/\\/[^\\s]*\\/(?:qr|qrcode|scan)[^\\s]*",
+            "(?i)https?:\\/\\/(?:bit\\.ly|tinyurl\\.com|is\\.gd|cutt\\.ly)\\/[A-Za-z0-9]+"
+          ],
+          "weight": 8
+        }
+      }
+    },
+    {
+      "id": "browser_in_browser",
+      "name": "Browser-in-the-Browser (BitB) Spoof",
+      "severity_default": "high",
+      "weights": { "regex": 8, "keyword": 5, "url": 7 },
+      "signals": {
+        "keywords": [
+          "sign in to continue","single sign-on required","continue with microsoft","continue with google"
+        ],
+        "regex_patterns": [
+          "(?i)\\bSSO\\b",
+          "(?i)\\b(single sign[- ]on)\\b",
+          "(?i)\\blogin window (?:emulation|emulated)\\b"
+        ],
+        "url_indicators": {
+          "regex": [
+            "(?i)https?:\\/\\/(?:[^\\s]*\\.)?(?:microsoftonline|login\\.microsoft|accounts\\.google|appleid)\\.[^\\s]*",
+            "(?i)https?:\\/\\/[^\\s]*\\.(?:auth|login|signin|sso)[^\\s]*"
+          ],
+          "weight": 7
+        }
+      }
+    }
+  ],
+  "jurisdiction_overrides": {
+    "AU": {
+      "gov_brands": ["mygov","ato","services australia","medicare","australia post","auspost","nsw government","vic gov","queensland government","centrelink"],
+      "bank_brands": ["commonwealth bank","commbank","westpac","anz","nab","bankwest","suncorp","bendigo"],
+      "regex_additions": [
+        "(?i)\\bmygov\\b",
+        "(?i)\\bato\\b",
+        "(?i)australia\\s*post|auspost",
+        "(?i)\\bcentrelink\\b",
+        "(?i)\\bnetbank\\b"
+      ],
+      "weight_bonus_per_match": 3
+    }
+  },
+  "ui_guidance": {
+    "summary_templates": {
+      "phishing": "This page/email asks for sensitive credentials using urgent language and suspicious links. This matches common phishing tactics. Do not enter information.",
+      "smishing_vishing": "This message uses urgency and short links typical of SMS/voice phishing. Open your official app or website instead of tapping links.",
+      "tech_support_scam": "This page displays fake security alerts and demands you call support. Real providers do not lock your browser or demand calls.",
+      "ransomware": "Content references encryption and crypto payments for decryption. This aligns with ransomware behavior. Disconnect and seek professional help.",
+      "identity_theft": "A form requests high-risk identity data (TFN, licence, Medicare). Provide such data only via verified government portals.",
+      "payment_fraud": "Request for gift cards/crypto/wire transfer is a strong fraud indicator. Use verified payment channels only.",
+      "business_email_compromise": "Language and header cues suggest an impersonated executive/supplier with urgent payment changes.",
+      "investment_crypto_scam": "Promises of guaranteed returns and celebrity/government endorsements are classic investment scams.",
+      "romance_scam": "Financial urgency and secrecy requests are common romance scam markers.",
+      "job_charity_scam": "Upfront fees for jobs/charity/lottery are red flags.",
+      "malicious_download": "Offers of updates/codecs/installers from non-official domains are unsafe.",
+      "oauth_consent_phish": "The app requests excessive permissions via OAuth. Grant access only to apps you initiated on official domains.",
+      "qr_phishing": "QR codes can hide malicious links. Prefer navigating manually to the official site.",
+      "browser_in_browser": "A fake embedded login window can capture credentials. Check the browser address bar and domain carefully."
+    },
+    "action_advice": [
+      "Do not enter credentials or personal information.",
+      "Navigate manually to the official site/app.",
+      "Verify the sender/domain via an independent channel.",
+      "Avoid downloading or running unknown files.",
+      "Never pay with gift cards or crypto on demand.",
+      "Enable multi-factor authentication (MFA) on all accounts.",
+      "Report the message/site to the appropriate authority."
+    ]
+  }
+}

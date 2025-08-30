@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Clarity - Digital Confidence Tool",
+  "version": "1.0",
+  "description": "Detect misinformation, cyberthreats, and enhance digital safety.",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:*",
+    "https://localhost:*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["highlighter.js", "threatdetect.js", "claimbox.js", "chatbot.js", "content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_title": "Clarity - Click to toggle sidebar"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["sidebar.css", "chatbot.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
