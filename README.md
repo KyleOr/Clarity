@@ -289,32 +289,6 @@ Clarity uses official Australian data sources for fact-checking:
 2. Review **server output** when running `start_clarity.py`
 3. Run **diagnostic tests** in `chatbot/controller.py`
 
-## 🤝 Contributing
-
-I welcome contributions! Please:
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/new-feature`
-3. Make your changes and test thoroughly
-4. Submit a pull request with a detailed description
-
-### Development Setup
-
-```bash
-# Install development dependencies
-pip install -r requirements-dev.txt
-
-# Run tests
-python -m pytest tests/
-
-# Format code
-black scripts/ chatbot/ extension/
-```
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 - **llama.cpp** - Efficient LLM inference engine
@@ -324,6 +298,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ for digital safety and AI-powered fact-checking**
-
-For questions, issues, or contributions, please visit our [GitHub repository](https://github.com/KyleOr/safesearch).
+**Protecting you from scams (and bad headlines)**
