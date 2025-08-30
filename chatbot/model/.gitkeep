@@ -1,0 +1,22 @@
+# Model Directory
+
+This directory should contain your GGUF model files.
+
+## Supported Models
+
+- Any GGUF format model compatible with llama.cpp
+- Recommended: 7B-13B parameter models for good performance/speed balance
+
+## Example Models
+
+- `openhermes-2.5-mistral-7b.Q4_K_M.gguf`
+- `llama-2-13b-chat.Q4_K_M.gguf`
+- `codellama-7b-instruct.Q4_K_M.gguf`
+
+## Download Sources
+
+- Hugging Face (search for GGUF versions)
+- TheBloke's model repositories
+- Official model releases
+
+**Note**: Model files are ignored by git due to their large size. You'll need to download them separately.

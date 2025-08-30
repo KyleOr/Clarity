@@ -1,0 +1,16 @@
+# Clarity Chatbot Requirements
+# These packages are needed for the GGUF model chatbot integration
+
+# Core Python packages (usually already installed)
+# subprocess - Built-in Python module for running external processes
+# os - Built-in Python module for operating system interface  
+# json - Built-in Python module for JSON handling
+# tempfile - Built-in Python module for temporary files
+
+# Web server for browser extension integration
+flask>=2.3.0
+flask-cors>=4.0.0
+requests>=2.31.0
+
+# Note: The main dependency is llama.cpp which needs to be built separately
+# See controller.py for build instructions
