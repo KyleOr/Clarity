@@ -1,5 +1,7 @@
 # 🌟 Clarity – Building Digital Confidence Online
 
+[Watch the Clarity demo on YouTube](https://youtu.be/ZE_1iTGucsM)
+
 The internet powers communication, services, and community — but it’s also filled with risks: phishing scams, fake ads, ransomware, and misinformation that erodes trust. These challenges are hardest on **vulnerable groups** like children, the elderly, minority communities, and people who are digitally inexperienced. Without the right tools, they are left more exposed to online manipulation and fraud.
 
 **Clarity** is my response to the GovHack 2025 challenge: a browser extension built to **restore trust, enhance safety, and empower everyday users**. By combining real-time cyberthreat detection, misinformation analysis with government datasets, and an approachable AI assistant, I aim to make online participation more **secure, inclusive, and confident** for everyone.
